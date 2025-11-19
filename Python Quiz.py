@@ -19,15 +19,30 @@ def line():
     print("")
 
 
-# TEST Layout
-def question(type):
-    print("Question: ", type)
-
+# SCORE / GRADING / PERCENT
+def grade():
+    line()
+    print('Passing score: 70% correct')
+    space()
+    print('Correct:   ', correct,'   ', percent(correct), end='%')
+    space()
+    print('Incorrect: ', incorrect,'   ', percent(incorrect), end='%')
+    space()
+    if percent(correct) >= 70:
+        print('Your score: ' + str(percent(correct)) + '%')
+        print('***You passed the exam!')
+    else:
+        print('Your score: ' + str(percent(correct)) + '%')
+        print('***You did not pass the exam.')
+    
+def percent(num):
+    result = round((num / len(t1_questions)) * 100, 2)
+    return result
+    
 
 # TEST QUESTIONS
     #SECTION   -   1
 def t1_q1():
-    global score
     global correct
     global incorrect
     answer = (
@@ -44,14 +59,12 @@ def t1_q1():
         .strip()
     )
     if answer == "C":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 
 def t1_q2():
-    global score
     global correct
     global incorrect
     answer = (
@@ -68,14 +81,12 @@ def t1_q2():
         .strip()
     )
     if answer == "A":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 
 def t1_q3():
-    global score
     global correct
     global incorrect
     answer = (
@@ -92,14 +103,12 @@ def t1_q3():
         .strip()
     )
     if answer == "D":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 
 def t1_q4():
-    global score
     global correct
     global incorrect
     answer = (
@@ -116,14 +125,12 @@ def t1_q4():
         .strip()
     )
     if answer == "B":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 
 def t1_q5():
-    global score
     global correct
     global incorrect
 
@@ -141,14 +148,12 @@ def t1_q5():
         .strip()
     )
     if answer == "B":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 
 def t1_q6():
-    global score
     global correct
     global incorrect
     answer = (
@@ -167,14 +172,12 @@ def t1_q6():
         .strip()
     )
     if answer == "A":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 
 def t1_q7():
-    global score
     global correct
     global incorrect
     answer = (
@@ -192,14 +195,12 @@ def t1_q7():
         .strip()
     )
     if answer == "C":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 
 def t1_q8():
-    global score
     global correct
     global incorrect
     answer = (
@@ -217,14 +218,12 @@ def t1_q8():
         .strip()
     )
     if answer == "D":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 
 def t1_q9():
-    global score
     global correct
     global incorrect
     answer = (
@@ -242,14 +241,12 @@ def t1_q9():
         .strip()
     )
     if answer == "B":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 
 def t1_q10():
-    global score
     global correct
     global incorrect
     answer = (
@@ -267,14 +264,12 @@ def t1_q10():
         .strip()
     )
     if answer == "C":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 
 def t1_q11():
-    global score
     global correct
     global incorrect
     answer = (
@@ -292,13 +287,11 @@ def t1_q11():
         .strip()
     )
     if answer == "D":
-        score += 1
         correct += 1
     else:
         incorrect += 1
         
 def t1_q12():
-    global score
     global correct
     global incorrect
     answer = (
@@ -316,13 +309,11 @@ def t1_q12():
         .strip()
     )
     if answer == 'C':
-        score += 1
         correct += 1
     else:
         incorrect += 1
         
 def t1_q13():
-    global score
     global correct
     global incorrect
     answer = (
@@ -340,18 +331,15 @@ def t1_q13():
         .strip()
     )
     if answer == "A":
-        score += 1
         correct += 1
     else:
         incorrect += 1
         
 def t1_q14():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            What operators can you use with strings in Python?
+        input("""What operators can you use with strings in Python?
     
     A - With strings, you can use - to concatenate (seperate) strings and r to repeat a string.
     B - With strings, you can use * to concatenate (join) strings and + to repeat a string.
@@ -364,18 +352,15 @@ def t1_q14():
         .strip()
     )
     if answer == "C":
-        score += 1
         correct += 1
     else:
         incorrect += 1
         
 def t1_q15():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            What is the assignment operator in Python?
+        input("""What is the assignment operator in Python?
     
     A - The assignment operator is:   =   It assigns the value on the right to the variable name on the left.
     B - The assignment operator is:   ==  It assigns the value on the right to the variable name on the left.
@@ -388,18 +373,15 @@ def t1_q15():
         .strip()
     )
     if answer == "A":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 def t1_q16():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            What is operator precedence?
+        input("""What is operator precedence?
     
     A - Operator precedence determines the semantics in which operations are performed.
     B - Operator precedence determines the order in which operations are performed.
@@ -412,18 +394,15 @@ def t1_q16():
         .strip()
     )
     if answer == "B":
-        score += 1
         correct += 1
     else:
         incorrect += 1
         
 def t1_q17():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            What are bitwise operators in Python?
+        input("""What are bitwise operators in Python?
     
     A - Bitwise operators work on the hexadecimal representation of integers: & (AND), | (OR), ^ (XOR), ~ (NOT), << (left shift), and >> (right shift).
     B - Bitwise operators work on the binary representation of integers: & (AND), | (OR), ^ (XOR), ~ (NOT), << (left shift), and >> (right shift).
@@ -436,18 +415,15 @@ def t1_q17():
         .strip()
     )
     if answer == "B":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 def t1_q18():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            What are Boolean operators in Python?
+        input("""What are Boolean operators in Python?
     
     A - Boolean operators combine boolean values: is, in, not in. 
     B - Boolean operators combine boolean values: xor, or, and
@@ -460,18 +436,15 @@ def t1_q18():
         .strip()
     )
     if answer == "D":
-        score += 1
         correct += 1
     else:
         incorrect += 1
         
 def t1_q19():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            What are comparison (relational) operators in Python?
+        input("""What are comparison (relational) operators in Python?
     
     A - Comparison operators compare values and produce True or False: ==, !=, >, <, >=, <=
     B - Comparison operators compare values and produce True or False: ==, >, <, >=, <=
@@ -484,18 +457,15 @@ def t1_q19():
         .strip()
     )
     if answer == "A":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 def t1_q20():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            Why can floating-point calculations be inaccurate?
+        input("""Why can floating-point calculations be inaccurate?
     
     A - Floating-point number calculations are accurate
     B - Floating-point numbers are represented in binary, and some decimal fractions cannot be represented exactly. This leads to small rounding errors
@@ -508,18 +478,15 @@ def t1_q20():
         .strip()
     )
     if answer == "2":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 def t1_q21():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            What is type casting in Python?
+        input("""What is type casting in Python?
     
     A - Type casting means splicing a value or values from one list/tuple to another.
     B - Type casting means an actor is casted into a similar role despite different films/genres
@@ -532,18 +499,15 @@ def t1_q21():
         .strip()
     )
     if answer == "D":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 def t1_q22():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            How do you display output in Python?
+        input("""How do you display output in Python?
     
     A - Use the input() function.
     B - Use the print() function.
@@ -556,18 +520,15 @@ def t1_q22():
         .strip()
     )
     if answer == "":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 def t1_q23():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            How do you prompt the user to provide a value in Python?
+        input("""How do you prompt the user to provide a value in Python?
     
     A - Use the print() function
     B - Use the while() loop
@@ -580,18 +541,15 @@ def t1_q23():
         .strip()
     )
     if answer == "C":
-        score += 1
         correct += 1
     else:
         incorrect += 1
         
 def t1_q24():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            In print(), sep specifies the separator between items (default is a space), and end specifies what to print at the end (default is a newline \n).
+        input("""In print(), sep specifies the separator between items (default is a space), and end specifies what to print at the end (default is a newline \n).
 
     
     A - True
@@ -603,18 +561,15 @@ def t1_q24():
         .strip()
     )
     if answer == "A":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 def t1_q25():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            How can you convert input to a different type?
+        input("""How can you convert input to a different type?
     
     A - Use conversion functions like int() or float().
     B - Use conversion functions like append() or pop()
@@ -627,23 +582,20 @@ def t1_q25():
         .strip()
     )
     if answer == "A":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
     #SECTION   -   2
 def t1_q26():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
-            What is an accurate representation of the syntax of an if statement in Python?
+        input("""What is an accurate representation of the syntax of an if statement in Python?
     
     A - if True:
              Print('Hello World')
-    B - elif true:
+    B - if True
              print("Hello World")
     C - if true:
              Print('Hello World')
@@ -656,150 +608,123 @@ def t1_q26():
         .strip()
     )
     if answer == "D":
-        score += 1
         correct += 1
     else:
         incorrect += 1
 
 def t1_q27():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
+        input("""What is a boolean expression in the context of an if statement?
     
-    A - 
-    B - 
-    C - 
-    D - 
+    A - x + 20
+    B - x > 5
+    C - x -= 1
+    D - x % 2 
     
     """
         )
         .capitalize()
         .strip()
     )
-    if answer == "":
-        score += 1
+    if answer == "B":
         correct += 1
     else:
         incorrect += 1
 
 def t1_q28():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
+        input("""What does nested conditional statements mean?
     
-    A - 
-    B - 
-    C - 
-    D - 
+    A - Nested conditionals mean putting a while or for loop inside another while or for loop block
+    B - Nested conditionals mean putting a try, except, and finally block inside another try, except, and finally block
+    C - Nested conditionals mean putting a for loop within a list or tuple
+    D - Nested conditionals mean putting an if (or elif/else) inside another if or else block
     
     """
         )
         .capitalize()
         .strip()
     )
-    if answer == "":
-        score += 1
+    if answer == "D":
         correct += 1
     else:
         incorrect += 1
 
 def t1_q29():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
+        input("""What is the pass statement used for in Python?
     
-    A - 
-    B - 
-    C - 
-    D - 
+    A - it hard stops the code forcing a loop to end
+    B - it is a specialized statement similar to None
+    C - it holds no value and thus does nothing. it can be used as a placeholder
+    D - it allows the code to pass over the current line and onto the next
     
     """
         )
         .capitalize()
         .strip()
     )
-    if answer == "":
-        score += 1
+    if answer == "C":
         correct += 1
     else:
         incorrect += 1
 
 def t1_q30():
-    global score
     global correct
     global incorrect
     answer = (
-        input("""
+        input("""Which of these blocks of code accurately represents a while loop in Python?
     
-    A - 
-    B - 
-    C - 
-    D - 
+    A - x = 1
+        while x <= 5:
+            print(x)
+            x += 1
+    B - x = 1
+        While x % 2 == 0:
+            print(i)
+            x += 1
+    C - while true:   
+            x += 5
+    D - x = 1
+        while x <= 5
+            print(x)
+            x += 1
     
     """
         )
         .capitalize()
         .strip()
     )
-    if answer == "":
-        score += 1
+    if answer == "A":
         correct += 1
     else:
         incorrect += 1
 
 # TEST 2 QUESTIONS    2️⃣2️⃣2️⃣
-def t2_q1():
-    print(2, 1)
+def dev():
+    global correct
+    global incorrect
+    space()
+    answer = input('enter: a')
+    if answer == 'a':
+        correct += 1
+    else:
+        incorrect += 1
+        
 
 
 # Variables
-score = 0  # used to add to total
-grade = score  # total score
 correct = 0  # number of answers answered correctly
 incorrect = 0  # number of answers answered incorrectly
 
 
-# Lists / Tuples / Dictionaries
-test_1_score = {
-    "Question 1": 0,
-    "Question 2": 0,
-    "Question 3": 0,
-    "Question 4": 0,
-    "Question 5": 0,
-    "Question 6": 0,
-    "Question 7": 0,
-    "Question 8": 0,
-    "Question 9": 0,
-    "Question 10": 0,
-    "Question 11": 0,
-    "Question 12": 0,
-    "Question 13": 0,
-    "Question 14": 0,
-    "Question 15": 0,
-    "Question 16": 0,
-    "Question 17": 0,
-    "Question 18": 0,
-    "Question 19": 0,
-    "Question 20": 0,
-    "Question 21": 0,
-    "Question 22": 0,
-    "Question 23": 0,
-    "Question 24": 0,
-    "Question 25": 0,
-    "Question 26": 0,
-    "Question 27": 0,
-    "Question 28": 0,
-    "Question 29": 0,
-    "Question 30": 0,
-}
-
-
+# LISTS
 t1_questions = [n + 1 for n in range(0, 30)]
 
 
@@ -810,113 +735,108 @@ print(
         by: Nathaniel Olguin"""
 )
 line()
-print("    The test is 30 questions long")
+print("  The test is 30 questions long")
 line()
-which_test = random.randint(1, 2)
-print("Test #", which_test)  # TESTING
+
 
 
 # STEP 2 | Begin Test ———————————————————————
-if which_test == 1:
-    random.shuffle(t1_questions)
-    print(t1_questions)
-    # LOOP
-    while len(t1_questions) > 0:
-        popped = t1_questions.pop(0)
-        # WHICH QUESTION TO DISPLAY?
-        if popped == 1:
-            line()
-            t1_q1()
-        elif popped == 2:
-            line()
-            t1_q2()
-        elif popped == 3:
-            line()
-            t1_q3()
-        elif popped == 4:
-            line()
-            t1_q4()
-        elif popped == 5:
-            line()
-            t1_q5()
-        elif popped == 6:
-            line()
-            t1_q6()
-        elif popped == 7:
-            line()
-            t1_q7
-        elif popped == 8:
-            line()
-            t1_q8
-        elif popped == 9:
-            line()
-            t1_q9
-        elif popped == 10:
-            line()
-            t1_q10
-        elif popped == 11:
-            line()
-            t1_q11
-        elif popped == 12:
-            line()
-            t1_q12
-        elif popped == 13:
-            line()
-            t1_q13
-        elif popped == 14:
-            line()
-            t1_q14
-        elif popped == 15:
-            line()
-            t1_q15
-        elif popped == 16:
-            line()
-            t1_q16
-        elif popped == 17:
-            line()
-            t1_q17
-        elif popped == 18:
-            line()
-            t1_q18
-        elif popped == 19:
-            line()
-            t1_q19
-        elif popped == 20:
-            line()
-            t1_q20
-        elif popped == 21:
-            line()
-            t1_q21
-        elif popped == 22:
-            line()
-            t1_q22
-        elif popped == 23:
-            line()
-            t1_q23
-        elif popped == 24:
-            line()
-            t1_q24
-        elif popped == 25:
-            line()
-            t1_q25
-        elif popped == 26:
-            line()
-            t1_q26
-        elif popped == 27:
-            line()
-
-        elif popped == 28:
-            line()
-
-        elif popped == 29:
-            line()
-
-        elif popped == 30:
-            line()
-
-
-if which_test == 2:
-    print("Two")
-    while True:
-        t2_q1()
-        break
+random.shuffle(t1_questions)
+print(t1_questions)
+# LOOP
+while len(t1_questions) > 0:
+    popped = t1_questions.pop(0)
+    # WHICH QUESTION TO DISPLAY?
+    if popped == 1:
+        line()
+        t1_q1()
+    elif popped == 2:
+        line()
+        t1_q2()
+    elif popped == 3:
+        line()
+        t1_q3()
+    elif popped == 4:
+        line()
+        t1_q4()
+    elif popped == 5:
+        line()
+        t1_q5()
+    elif popped == 6:
+        line()
+        t1_q6()
+    elif popped == 7:
+        line()
+        t1_q7()
+    elif popped == 8:
+        line()
+        t1_q8()
+    elif popped == 9:
+        line()
+        t1_q9()
+    elif popped == 10:
+        line()
+        t1_q10()
+    elif popped == 11:
+        line()
+        t1_q11()
+    elif popped == 12:
+        line()
+        t1_q12()
+    elif popped == 13:
+        line()
+        t1_q13()
+    elif popped == 14:
+        line()
+        t1_q14()
+    elif popped == 15:
+        line()
+        t1_q15()
+    elif popped == 16:
+        line()
+        t1_q16()
+    elif popped == 17:
+        line()
+        t1_q17()
+    elif popped == 18:
+        line()
+        t1_q18()
+    elif popped == 19:
+        line()
+        t1_q19()
+    elif popped == 20:
+        line()
+        t1_q20()
+    elif popped == 21:
+        line()
+        t1_q21()
+    elif popped == 22:
+        line()
+        t1_q22()
+    elif popped == 23:
+        line()
+        t1_q23()
+    elif popped == 24:
+        line()
+        t1_q24()
+    elif popped == 25:
+        line()
+        t1_q25()
+    elif popped == 26:
+        line()
+        t1_q26()
+    elif popped == 27:
+        line()
+        t1_q27()
+    elif popped == 28:
+        line()
+        t1_q28()
+    elif popped == 29:
+        line()
+        t1_q29()
+    elif popped == 30:
+        line()
+        t1_q30()
+grade()
+    
+        
