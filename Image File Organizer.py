@@ -17,8 +17,8 @@ print(initial_directory)    #for reference
 
 
 #STEP 2 - Creating image file type folders
-os.makedirs('Organized Images\\PNG', exist_ok=True)
-os.chdir('Organized Images')    #update initial directory to the newly created folder 'Organized Images'
+os.makedirs('Image Files\\PNG', exist_ok=True)
+os.chdir('Image Files')    #update initial directory to the newly created folder 'Image Files'
 new_directory = os.getcwd()
 os.makedirs('JPEG', exist_ok=True)
 os.makedirs('SVG', exist_ok=True)
