@@ -21,6 +21,32 @@ def character_count(file):    #the entry-dating formating is 45-ish (spacing and
     print(f'Journal Entries:      {timestamp_count}')    #number of times a journal entry was made calculated using the count of timestamps
     return f'Character Count:  {final_count}'    #word count
 
+def word_count(file):    #word count of the timestamp is 5
+    global simple_date
+    timestamp_count = file.count(simple_date)
+    word_list = file.split()    #list of words in file
+    final_count = len(word_list) - (timestamp_count * 5)
+    print()    #space
+    print(f'Journal Entries:      {timestamp_count}')
+    return f'Word Count:             {final_count}'
+
+def word_frequency(file):    #***NEEDS WORD***
+    frequency = {}    #dictionary for words used
+    word_list = file.split()    #list of words in file
+    while len(word_list) > 0:
+        word = word_list.pop()    #remove words from word_list
+        if word not in frequency:
+            frequency[word] = 1
+        else:
+            frequency[word] += 1
+
+
+    print()    #space
+    print('Word Frequency Data:')
+    for key in frequency:    #prnt items in dictonary
+        print(key , frequency[key])
+    print(word_list)    #for dev reference
+
 
 #VARIABLES
 date = datetime.now()    #used for simple_date formatting
@@ -45,3 +71,5 @@ print(content)
 
 #STEP 2  |  Anaylize the 'content'
 print(character_count(content))
+print(word_count(content))
+print(word_frequency(content))
