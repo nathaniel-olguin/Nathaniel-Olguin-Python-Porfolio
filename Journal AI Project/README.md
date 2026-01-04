@@ -36,6 +36,10 @@
 
 #####  	◯  analysis.py
 
+######  		◉  IMPORTANT INFO:
+
+ 				•	Depends on internal module: [My Py Modules/njro.py](https://github.com/nathaniel-olguin/Nathaniel-Olguin-Python-Porfolio/tree/main/My%20Py%20Modules)
+
 ######  		◉  Handles:
 
  				•	reading the text

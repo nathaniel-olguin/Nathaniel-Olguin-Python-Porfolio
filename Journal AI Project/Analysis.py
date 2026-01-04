@@ -8,68 +8,42 @@
 
 
 #IMPORTS
-import os
-from datetime import datetime
-
-
-#FUNCTIONS
-def character_count(file):    #the entry-dating formating is 45-ish (spacing and \n lines) characters long
-    global simple_date
-    timestamp_count = file.count(simple_date)    #counting the amount of times my entry-datetime formatting is present
-    final_count = len(file) - (timestamp_count * round(45.5))    #wordcount - the number of timestamps
-    print()    #space
-    print(f'Journal Entries:      {timestamp_count}')    #number of times a journal entry was made calculated using the count of timestamps
-    return f'Character Count:  {final_count}'    #word count
-
-def word_count(file):    #word count of the timestamp is 5
-    global simple_date
-    timestamp_count = file.count(simple_date)
-    word_list = file.split()    #list of words in file
-    final_count = len(word_list) - (timestamp_count * 5)
-    print()    #space
-    print(f'Journal Entries:      {timestamp_count}')
-    return f'Word Count:             {final_count}'
-
-def word_frequency(file):    #***NEEDS WORD***
-    frequency = {}    #dictionary for words used
-    word_list = file.split()    #list of words in file
-    while len(word_list) > 0:
-        word = word_list.pop()    #remove words from word_list
-        if word not in frequency:
-            frequency[word] = 1
-        else:
-            frequency[word] += 1
-
-
-    print()    #space
-    print('Word Frequency Data:')
-    for key in frequency:    #prnt items in dictonary
-        print(key , frequency[key])
-    print(word_list)    #for dev reference
+import os, njro    #njro is my personal module of functions
+from datetime import datetime    #used for finding the current days journal entry
 
 
 #VARIABLES
 date = datetime.now()    #used for simple_date formatting
-simple_date = date.strftime('%m-%d-%Y')    #used for locating each timestamp per entry
+simple_date = date.strftime('%m-%d-%Y')
 
 initial_directory = os.getcwd()    #reference
 data_dir = f'{initial_directory}\\Data'    #directory that holds the files analysis.py will read
 data_dir_list = os.listdir(data_dir)
 
 
-#STEP 1  |  Read the latest journal 'Data' entry
-print(data_dir_list)    #reference
+#STEP 1  |  Read the current days journal 'Data' entry
+todays_entry = f'Daily Journal  -  {simple_date}.md'
 
-if len(data_dir_list) < 2:    #if the 'Data' directory only has 1 entry read that entry
-    with open(f'{data_dir}\\{data_dir_list[0]}', 'r') as data:
+if todays_entry in data_dir_list:    #program looks for todays journal entry
+    print('File Exists:  True')
+    with open(f'{data_dir}\\{todays_entry}', 'r') as data:
         content = data.read()
-else:    #if the 'Data' directory has more than 1 entry read the latest(last) entry
-    with open(f'{data_dir}\\{data_dir_list[-1]}', 'r') as data:
-        content = data.read()
-print(content)
+else:
+    print('File Exists:  False')
+print(content)    #Dev Reference
 
 
 #STEP 2  |  Anaylize the 'content'
-print(character_count(content))
-print(word_count(content))
-print(word_frequency(content))
+njro.line()    #DEV READABILITY
+print(njro.character_count(content))
+print(njro.word_count(content))
+
+listed_words = content.split()    #turns the content into a list
+revised_words = []    #empty list for the end result of the njro.punctuation_checker function
+while len(listed_words) > 0:
+    word = listed_words.pop()
+    revised_words.append(njro.punctuation_checker(word))    #once words are fixed by the function, add to our original empty list
+    
+revised_words_str = ' '.join(revised_words)    #word_frequency requires a string argument
+print(njro.word_frequency(revised_words_str))
+njro.line()    #DEV READABILITY
