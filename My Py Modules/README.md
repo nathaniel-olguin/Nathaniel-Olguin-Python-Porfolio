@@ -38,6 +38,13 @@
 
 
 
+#####    ▷  top_words(num, string) 
+
+               > num argument MUST*** be an INTEGER
+               > string argument MUST*** be the same STRING argument used for the word_frequency() function
+
+
+
 #####    ▷  line()  
 
                > simply call upon it, no argument required
@@ -79,15 +86,18 @@
 #####    ▷  timestamp\_checker(file)    
 
                > used to verify if there is a timestamp present based on this formatting: MM-DD-YYYY
-               
+
+
+
+#####    ▷  top_words(num, string) 
+
+               > takes the returned values of word_frequency() and finds the top most used words. 
+
 
 
 #####    ▷  line()  
 
-               > for working in the pythong idle shell | FOR READABILITY
-
-
-
+               > for working in the python idle shell | FOR READABILITY
 
 
 

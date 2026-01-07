@@ -34,22 +34,6 @@ def word_count(file):    #word count of the timestamp is 5    |   ***REQUIRES A 
     return f'Word Count:            {final_count}'
 
 
-def word_frequency(file):    #how many times a word is used    |   ***REQUIRES A STRING ARGUMENT***
-    frequency = {}    #dictionary for words used
-    word_list = file.split()    #list of words in file
-    while len(word_list) > 0:
-        word = word_list.pop()    #remove words from word_list     
-        if word not in frequency:
-            frequency[word] = 1
-        else:
-            frequency[word] += 1
-            
-    print()    #space
-    print('Word Frequency Data:')
-    for key in frequency:    #prnt items in dictonary
-        print(key , frequency[key])
-
-
 def punctuation_checker(word):    #***REQUIRES A STRING ARGUMENT***    Must insert a single string. Utilize a while loop and the .pop() method for lists
     split_word = []    #list that holds each individual character of a word.
     rebuilt_word = []    #list of newly rebuilt words
@@ -66,13 +50,54 @@ def punctuation_checker(word):    #***REQUIRES A STRING ARGUMENT***    Must inse
                 rebuilt_word.append('n')
                 rebuilt_word.append('d')
                 final_word = ''.join(rebuilt_word)    #rebuild the word with the .join() method        
-            if char not in ('&', '!',  '@', '#', '^', '*', '(', ')', '_', '+', '=', '"', '~', '`', '[', ']', '{', '}', '|', '?', ',', '\\', '/', '<', '>', ';', '.', ' ', ''):    #checking for certain punctuation 
+
+            if char not in ('$', '&', '!',  '@', '#', '^', '*', '(', ')', '_', '+', '=', '"', '~', '`', '[', ']', '{', '}', '|', '?', ',', '\\', '/', '<', '>', ';', '.', ' ', '', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'):    #checking for certain punctuation 
                 rebuilt_word.append(char)
-                final_word = ''.join(rebuilt_word)    #rebuild the word with the .join() method           
+                final_word = ''.join(rebuilt_word)    #rebuild the word with the .join() method
+            
     else:
         #***NO Punctuation Detected***
         final_word = word
     return final_word    #outputs a single word
+
+
+def word_frequency(file):    #how many times a word is used    |   ***REQUIRES A STRING ARGUMENT***   A sentence/paragraph
+    frequency = {}    #dictionary for words used
+    word_list = file.split()    #list of words in file
+    while len(word_list) > 0:
+        word = word_list.pop()    #remove words from word_list     
+        if word not in frequency:
+            frequency[word] = 1
+        else:
+            frequency[word] += 1
+            
+        if word in ('-', '--', ':', '::'):    #final clearing of undesired punctuation
+            del frequency[word]
+            
+    print()    #space
+    print('Word Frequency Data:')
+    for key in frequency:    #print items in dictonary
+        print(key , frequency[key])
+    print()    #space
+    return frequency
+
+
+def top_words(num, string):    #top 5/10/15/20 used words    |   ***REQUIRES An Integer ARGUMENT  &  the same STRING Argument that you would use for:  word_frequency
+    words = word_frequency(string)
+    print(words)    #DEV REF
+    top_word = None
+
+    print()    #space
+    num_list_items = list(words.items())
+    num_list_values = list(words.values())
+    print(num_list_items[0][1])   #DEV REF
+    print()
+    sort_num_list_values = sorted(num_list_values)
+    print(sort_num_list_values)
+    
+
+
+    
 
 
 #FUNCTIONS   |   DEVELOPER BASICS (simple repeatable stuff for working in the pythong shell)
