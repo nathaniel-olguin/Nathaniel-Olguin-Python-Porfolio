@@ -63,13 +63,25 @@ def punctuation_checker(word):    #***REQUIRES A STRING ARGUMENT***    Must inse
 
 def word_frequency(file):    #how many times a word is used    |   ***REQUIRES A STRING ARGUMENT***   A sentence/paragraph
     frequency = {}    #dictionary for words used
+    filler_words = {}    #dictionary for filler-words
     word_list = file.split()    #list of words in file
     while len(word_list) > 0:
-        word = word_list.pop()    #remove words from word_list     
-        if word not in frequency:
+        word = word_list.pop()    #remove words from word_list
+
+        if word not in filler_words:    #first time adding word to filler_words
+            filler_words[word] = 1
+        else:
+            filler_words[word] += 1
+            
+        if word not in frequency:    #first time adding word to frequency
             frequency[word] = 1
         else:
             frequency[word] += 1
+
+        if word == 'am' or word == 'pm' or word == 'is' or word == 'to' or word == 'a' or word == 'the' or word == 'but' or word == 'actually' or word == 'basically' or word == 'seriously' or word == 'just' or word == 'very' or word == 'really' or word == 'highly' or word == 'totally' or word == 'simply' or word == 'most' or word == 'somehow' or word == 'slgihtly' or word == 'absolutely' or word == 'literally' or word == 'certainly' or word == 'honestly' or word == 'personally' or word == 'quite' or word == 'perhaps' or word == 'so' or word == 'completely' or word == 'somewhat' or word == 'however' or word == 'utterly' or word == 'i' or word == 'for' or word == 'what' or word == 'like' or word == 'and' or word == 'in' or word == 'all' or word == 'still' or word == 'we' or word == 'well' or word == 'so' or word == 'be':    #filtering out the filler words
+            del frequency[word]    #if a filler-word remove from frequency
+        elif word != 'am' or word != 'pm' or word != 'is' or word != 'to' or word != 'a' or word != 'the' or word != 'but' or word != 'actually' or word != 'basically' or word != 'seriously' or word != 'just' or word != 'very' or word != 'really' or word != 'highly' or word != 'totally' or word != 'simply' or word != 'most' or word != 'somehow' or word != 'slgihtly' or word != 'absolutely' or word != 'literally' or word != 'certainly' or word != 'honestly' or word != 'personally' or word != 'quite' or word != 'perhaps' or word != 'so' or word != 'completely' or word != 'somewhat' or word != 'however' or word != 'utterly' or word != 'i' or word != 'for' or word != 'what' or word != 'like' or word != 'and' or word != 'in' or word != 'all' or word != 'still' or word != 'we' or word != 'well' or word != 'so' or word != 'be':    #filtering out the filler words
+            del filler_words[word]
             
         if word in ('-', '--', ':', '::'):    #final clearing of undesired punctuation
             del frequency[word]
@@ -77,19 +89,24 @@ def word_frequency(file):    #how many times a word is used    |   ***REQUIRES A
     print()    #space
     print('Word Frequency Data:')
     for key in frequency:    #print items in dictonary
-        print(key , frequency[key])
+        print(key , frequency[key], sep='   =   ')
     print()    #space
-    return frequency
+    print('Filler Words Data:')
+    for key in filler_words:
+        print(key, filler_words[key], sep='   =   ')
+    print()    #space
+    return frequency, filler_words    #returns multiple items. MUST use UNPACKING to get both values inside individual variables
 
 
 def top_words(num, string):    #top 5/10/15/20 used words    |   ***REQUIRES An Integer ARGUMENT  &  the same STRING Argument that you would use for:  word_frequency
-    words = word_frequency(string)
-    print(words)    #DEV REF
+    main, filler = word_frequency(string)
+    print(f'Main words:    {main}')    #DEV REF
+    print(f' Filler words:   {filler}')    #DEV REF
     top_word = None
 
     print()    #space
-    num_list_items = list(words.items())
-    num_list_values = list(words.values())
+    num_list_items = list(main.items())
+    num_list_values = list(main.values())
     print(num_list_items[0][1])   #DEV REF
     print()
     sort_num_list_values = sorted(num_list_values)
