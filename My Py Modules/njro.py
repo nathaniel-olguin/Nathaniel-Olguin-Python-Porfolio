@@ -6,6 +6,66 @@ from datetime import datetime
 
 
 #FUNCTIONS   |   TEXT RELATED TOOLS
+def word_type():    #used for identifying english word types
+    #symbols ↴
+    symbols = ['$', '&', '!',  '@', '#', '^', '*', '(', ')', '_', '+', '=', '"', '~', '`', '[', ']', '{', '}', '|', '?', ',', '\\', '/', '<', '>', ';', '.']    #dash not included
+    #numbers ↴
+    numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+    #filler words ↴
+    article = ['the', 'a', 'an']
+    conjunctions =  ['and', 'or', 'but', 'so', 'yet']
+    prepositions = ['of', 'to', 'in', 'on', 'at', 'for', 'with', 'by', 'from', 'about']
+    pronouns = ['i', 'me', 'my', 'you', 'your', 'he', 'she', 'it', 'we', 'they', 'them', 'his', 'her', 'their', 'ours']
+    common_verbs = ['is', 'am', 'are', 'was', 'were', 'be', 'been', 'being', 'do', 'does', 'did', 'have', 'has', 'had']
+    filler_words = article + conjunctions + prepositions + pronouns + common_verbs
+    #emotional words ↴
+    negation = ['not', 'never', 'no']    #inverts emotion / changes meaning
+    sadness = [
+        'sad', 'gloomy', 'depressed', 'down', 'unhappy', 'miserable',
+        'hopeless', 'empty', 'lonely', 'heartbroken', 'grief', 'grieving',
+        'cry', 'crying', 'tears', 'sorrow', 'melancholy', 'blue',
+        'lost', 'helpless', 'defeated', 'numb', 'worthless', 'tired'
+    ]
+    anger = [
+        'angry', 'mad', 'furious', 'rage', 'irritated', 'annoyed',
+        'frustrated', 'resentful', 'bitter', 'hostile', 'outraged',
+        'pissed', 'hate', 'hateful', 'fuming', 'agitated',
+        'vengeful', 'enraged'
+    ]
+    fear_anxiety = [
+        'afraid', 'scared', 'fearful', 'terrified', 'anxious', 'anxiety',
+        'nervous', 'worried', 'panic', 'panicked', 'dread', 'uneasy',
+        'overwhelmed', 'stressed', 'stress', 'paranoid', 'unsafe',
+        'insecure', 'frightened'
+    ]
+    happiness = [
+        'happy', 'joy', 'joyful', 'excited', 'content', 'peaceful',
+        'pleased', 'grateful', 'thankful', 'cheerful', 'delighted',
+        'hopeful', 'optimistic', 'relieved', 'smiling', 'laugh',
+        'laughing', 'proud', 'fulfilled'
+    ]
+    love = [
+        'love', 'loved', 'loving', 'caring', 'affection', 'attached',
+        'connected', 'close', 'bonded', 'supported', 'safe',
+        'trusted', 'trust', 'warm', 'comforted', 'appreciated'
+    ]
+    guilt_shame = [
+        'guilty', 'ashamed', 'shame', 'regret', 'remorse',
+        'embarrassed', 'humiliated', 'sorry', 'apologetic',
+        'fault', 'blame', 'self-blame'
+    ]
+    confusion = [
+        'confused', 'lost', 'uncertain', 'unsure', 'doubt',
+        'doubtful', 'questioning', 'conflicted', 'torn',
+        'indecisive', 'unclear'
+    ]
+    #SLANG ↴
+    positive_slang = ["lit", "fire", "dope", "psyched", "letsgo", "cantwait", "vibing", "onone"]
+    negative_slang = ['cooked']
+    
+    return symbols, numbers, filler_words, negation, sadness, fear_anxiety, happiness, love, guilt_shame, confusion    #10 returned items to unpack or use INDEX:  word_type()[]
+
+
 def timestamp_checker(file):    #***used in the word & character count functions***
     date = datetime.now()    #used for simple_date formatting
     simple_date = date.strftime('%m-%d-%Y')    #used for locating timestamps
@@ -38,6 +98,10 @@ def punctuation_checker(word):    #***REQUIRES A STRING ARGUMENT***    Must inse
     split_word = []    #list that holds each individual character of a word.
     rebuilt_word = []    #list of newly rebuilt words
     word = word.lower()    #set the string argument to lowercase
+
+    symbols = word_type()[0]
+    numbers = word_type()[1]
+    unwanted = symbols + numbers
     
     if word.isalnum() is False:    #checking for punctuation: .isalnum() returns False if punctuation/symbols are detected
         #***Punctuation Detected***
@@ -51,10 +115,10 @@ def punctuation_checker(word):    #***REQUIRES A STRING ARGUMENT***    Must inse
                 rebuilt_word.append('d')
                 final_word = ''.join(rebuilt_word)    #rebuild the word with the .join() method        
 
-            if char not in ('$', '&', '!',  '@', '#', '^', '*', '(', ')', '_', '+', '=', '"', '~', '`', '[', ']', '{', '}', '|', '?', ',', '\\', '/', '<', '>', ';', '.', ' ', '', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'):    #checking for certain punctuation 
+            if char not in unwanted:    #checking for certain punctuation 
                 rebuilt_word.append(char)
                 final_word = ''.join(rebuilt_word)    #rebuild the word with the .join() method
-            
+
     else:
         #***NO Punctuation Detected***
         final_word = word
@@ -78,10 +142,10 @@ def word_frequency(file):    #how many times a word is used    |   ***REQUIRES A
         else:
             frequency[word] += 1
 
-        if word == 'am' or word == 'pm' or word == 'is' or word == 'to' or word == 'a' or word == 'the' or word == 'but' or word == 'actually' or word == 'basically' or word == 'seriously' or word == 'just' or word == 'very' or word == 'really' or word == 'highly' or word == 'totally' or word == 'simply' or word == 'most' or word == 'somehow' or word == 'slgihtly' or word == 'absolutely' or word == 'literally' or word == 'certainly' or word == 'honestly' or word == 'personally' or word == 'quite' or word == 'perhaps' or word == 'so' or word == 'completely' or word == 'somewhat' or word == 'however' or word == 'utterly' or word == 'i' or word == 'for' or word == 'what' or word == 'like' or word == 'and' or word == 'in' or word == 'all' or word == 'still' or word == 'we' or word == 'well' or word == 'so' or word == 'be':    #filtering out the filler words
+        if word == 'am' or word == 'pm' or word == 'is' or word == 'to' or word == 'a' or word == 'the' or word == 'but' or word == 'actually' or word == 'basically' or word == 'seriously' or word == 'just' or word == 'very' or word == 'really' or word == 'highly' or word == 'totally' or word == 'simply' or word == 'most' or word == 'somehow' or word == 'slgihtly' or word == 'absolutely' or word == 'literally' or word == 'certainly' or word == 'honestly' or word == 'personally' or word == 'quite' or word == 'perhaps' or word == 'so' or word == 'completely' or word == 'somewhat' or word == 'however' or word == 'utterly' or word == 'i' or word == 'for' or word == 'what' or word == 'like' or word == 'and' or word == 'in' or word == 'all' or word == 'still' or word == 'we' or word == 'well' or word == 'so' or word == 'be'  or word == 'there'  or word == 'or'  or word == 'that'  or word == 'on':    #filtering out the filler words
             del frequency[word]    #if a filler-word remove from frequency
-        elif word != 'am' or word != 'pm' or word != 'is' or word != 'to' or word != 'a' or word != 'the' or word != 'but' or word != 'actually' or word != 'basically' or word != 'seriously' or word != 'just' or word != 'very' or word != 'really' or word != 'highly' or word != 'totally' or word != 'simply' or word != 'most' or word != 'somehow' or word != 'slgihtly' or word != 'absolutely' or word != 'literally' or word != 'certainly' or word != 'honestly' or word != 'personally' or word != 'quite' or word != 'perhaps' or word != 'so' or word != 'completely' or word != 'somewhat' or word != 'however' or word != 'utterly' or word != 'i' or word != 'for' or word != 'what' or word != 'like' or word != 'and' or word != 'in' or word != 'all' or word != 'still' or word != 'we' or word != 'well' or word != 'so' or word != 'be':    #filtering out the filler words
-            del filler_words[word]
+        elif word != 'am' or word != 'pm' or word != 'is' or word != 'to' or word != 'a' or word != 'the' or word != 'but' or word != 'actually' or word != 'basically' or word != 'seriously' or word != 'just' or word != 'very' or word != 'really' or word != 'highly' or word != 'totally' or word != 'simply' or word != 'most' or word != 'somehow' or word != 'slgihtly' or word != 'absolutely' or word != 'literally' or word != 'certainly' or word != 'honestly' or word != 'personally' or word != 'quite' or word != 'perhaps' or word != 'so' or word != 'completely' or word != 'somewhat' or word != 'however' or word != 'utterly' or word != 'i' or word != 'for' or word != 'what' or word != 'like' or word != 'and' or word != 'in' or word != 'all' or word != 'still' or word != 'we' or word != 'well' or word != 'so' or word != 'be':    #filtering out the main words
+            del filler_words[word]    #deleting main-words from filler_words
             
         if word in ('-', '--', ':', '::'):    #final clearing of undesired punctuation
             del frequency[word]
@@ -117,8 +181,9 @@ def top_words(num, string):    #top 5/10/15/20 used words    |   ***REQUIRES An 
     
 
 
-#FUNCTIONS   |   DEVELOPER BASICS (simple repeatable stuff for working in the pythong shell)
+#FUNCTIONS   |   DEVELOPER BASICS (simple repeatable stuff for working in the python shell)
 def line():
     print('''
 ——————————————————————————————————
 ''')
+

@@ -6,9 +6,26 @@
 
 
 
-##### &nbsp;  ▷   character\_count(file)
+#####    ▷   word\_type()
 
-&nbsp;              > when calling upon the function, provide a text file or string argument for the 'file' parameter.
+               > 10 returned items to unpack or use INDEX:  word_type()[]  
+               
+                    0 - symbols
+                    1 - numbers
+                    2 - filler_words
+                    3 - negation
+                    4 - sadness
+                    5 - fear_anxiety
+                    6 - happiness
+                    7 - love
+                    8 - guilt_shame
+                    9 - confusion
+
+
+
+#####    ▷   character\_count(file)
+
+               > when calling upon the function, provide a text file or string argument for the 'file' parameter.
 
 
 
@@ -38,10 +55,10 @@
 
 
 
-#####    ▷  top_words(num, string) 
+#####    ▷  top\_words(num, string) 
 
                > num argument MUST*** be an INTEGER
-               > string argument MUST*** be the same STRING argument used for the word_frequency() function
+               > string argument MUST*** be the same type of STRING argument used for the word_frequency() function, because it relies on the word_frequency() function. 
 
 
 
@@ -54,6 +71,12 @@
 
 
 ### **▶   What it does:**
+
+
+
+#####    ▷   word\_type()
+
+               > Meant as a reference for other functions. Returns 10 lists of: symbols, numbers, filler words, negation words, & several emotions
 
 
 
@@ -89,7 +112,7 @@
 
 
 
-#####    ▷  top_words(num, string) 
+#####    ▷  top\_words(num, string) 
 
                > takes the returned values of word_frequency() and finds the top most used words. 
 
