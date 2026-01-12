@@ -2,7 +2,8 @@
 
 
 #IMPORTS
-from datetime import datetime
+from datetime import datetime    #timestamping
+import heapq    #hightest/lowest values in a list
 
 
 #FUNCTIONS   |   TEXT RELATED TOOLS
@@ -17,7 +18,7 @@ def word_type():    #used for identifying english word types
     prepositions = ['of', 'to', 'in', 'on', 'at', 'for', 'with', 'by', 'from', 'about']
     pronouns = ['i', 'me', 'my', 'you', 'your', 'he', 'she', 'it', 'we', 'they', 'them', 'his', 'her', 'their', 'ours']
     common_verbs = ['is', 'am', 'are', 'was', 'were', 'be', 'been', 'being', 'do', 'does', 'did', 'have', 'has', 'had']
-    filler_words = article + conjunctions + prepositions + pronouns + common_verbs
+    filler_freq = article + conjunctions + prepositions + pronouns + common_verbs
     #emotional words ↴
     negation = ['not', 'never', 'no']    #inverts emotion / changes meaning
     sadness = [
@@ -60,10 +61,10 @@ def word_type():    #used for identifying english word types
         'indecisive', 'unclear'
     ]
     #SLANG ↴
-    positive_slang = ["lit", "fire", "dope", "psyched", "letsgo", "cantwait", "vibing", "onone"]
+    positive_slang = ['lit', 'fire', 'dope', 'psyched', 'vibing']
     negative_slang = ['cooked']
     
-    return symbols, numbers, filler_words, negation, sadness, fear_anxiety, happiness, love, guilt_shame, confusion    #10 returned items to unpack or use INDEX:  word_type()[]
+    return symbols, numbers, filler_freq, negation, sadness, fear_anxiety, happiness, love, guilt_shame, confusion    #10 returned items to unpack or use INDEX:  word_type()[]
 
 
 def timestamp_checker(file):    #***used in the word & character count functions***
@@ -126,59 +127,88 @@ def punctuation_checker(word):    #***REQUIRES A STRING ARGUMENT***    Must inse
 
 
 def word_frequency(file):    #how many times a word is used    |   ***REQUIRES A STRING ARGUMENT***   A sentence/paragraph
-    frequency = {}    #dictionary for words used
-    filler_words = {}    #dictionary for filler-words
+    main_freq = {}    #dictionary for main words used
+    filler_freq = {}    #dictionary for filler-words used
     word_list = file.split()    #list of words in file
+
+    filler_words = word_type()[2]    #filler words used to filter out
+    
     while len(word_list) > 0:
         word = word_list.pop()    #remove words from word_list
 
-        if word not in filler_words:    #first time adding word to filler_words
-            filler_words[word] = 1
+        if word not in filler_freq:    #first time adding word to filler_freq
+            filler_freq[word] = 1
         else:
-            filler_words[word] += 1
+            filler_freq[word] += 1
             
-        if word not in frequency:    #first time adding word to frequency
-            frequency[word] = 1
+        if word not in main_freq:    #first time adding word to main_freq
+            main_freq[word] = 1
         else:
-            frequency[word] += 1
+            main_freq[word] += 1
 
-        if word == 'am' or word == 'pm' or word == 'is' or word == 'to' or word == 'a' or word == 'the' or word == 'but' or word == 'actually' or word == 'basically' or word == 'seriously' or word == 'just' or word == 'very' or word == 'really' or word == 'highly' or word == 'totally' or word == 'simply' or word == 'most' or word == 'somehow' or word == 'slgihtly' or word == 'absolutely' or word == 'literally' or word == 'certainly' or word == 'honestly' or word == 'personally' or word == 'quite' or word == 'perhaps' or word == 'so' or word == 'completely' or word == 'somewhat' or word == 'however' or word == 'utterly' or word == 'i' or word == 'for' or word == 'what' or word == 'like' or word == 'and' or word == 'in' or word == 'all' or word == 'still' or word == 'we' or word == 'well' or word == 'so' or word == 'be'  or word == 'there'  or word == 'or'  or word == 'that'  or word == 'on':    #filtering out the filler words
-            del frequency[word]    #if a filler-word remove from frequency
-        elif word != 'am' or word != 'pm' or word != 'is' or word != 'to' or word != 'a' or word != 'the' or word != 'but' or word != 'actually' or word != 'basically' or word != 'seriously' or word != 'just' or word != 'very' or word != 'really' or word != 'highly' or word != 'totally' or word != 'simply' or word != 'most' or word != 'somehow' or word != 'slgihtly' or word != 'absolutely' or word != 'literally' or word != 'certainly' or word != 'honestly' or word != 'personally' or word != 'quite' or word != 'perhaps' or word != 'so' or word != 'completely' or word != 'somewhat' or word != 'however' or word != 'utterly' or word != 'i' or word != 'for' or word != 'what' or word != 'like' or word != 'and' or word != 'in' or word != 'all' or word != 'still' or word != 'we' or word != 'well' or word != 'so' or word != 'be':    #filtering out the main words
-            del filler_words[word]    #deleting main-words from filler_words
+        if word in filler_words:
+            del main_freq[word]    #if a filler-word remove from main_freq
+        elif word not in filler_words:
+            del filler_freq[word]    #deleting main-words from filler_freq
             
         if word in ('-', '--', ':', '::'):    #final clearing of undesired punctuation
-            del frequency[word]
+            del main_freq[word]
             
     print()    #space
-    print('Word Frequency Data:')
-    for key in frequency:    #print items in dictonary
-        print(key , frequency[key], sep='   =   ')
+    print('Main-Word Frequency Data:')
+    for key in main_freq:    #print items in dictonary
+        print(key , main_freq[key], sep='   =   ')
     print()    #space
-    print('Filler Words Data:')
-    for key in filler_words:
-        print(key, filler_words[key], sep='   =   ')
+    print('Filler-Word Frequency Data:')
+    for key in filler_freq:
+        print(key, filler_freq[key], sep='   =   ')
     print()    #space
-    return frequency, filler_words    #returns multiple items. MUST use UNPACKING to get both values inside individual variables
+    return main_freq, filler_freq    #returns multiple items. MUST use UNPACKING to get both values inside individual variables
 
 
-def top_words(num, string):    #top 5/10/15/20 used words    |   ***REQUIRES An Integer ARGUMENT  &  the same STRING Argument that you would use for:  word_frequency
+def top_words(string, num=5):    #top 5/10/15/20 used words    |   ***REQUIRES An Integer ARGUMENT  &  the same STRING Argument that you would use for:  word_frequency
     main, filler = word_frequency(string)
-    print(f'Main words:    {main}')    #DEV REF
-    print(f' Filler words:   {filler}')    #DEV REF
-    top_word = None
 
+    main_list_values = sorted(list(main.values()))    #list of the  numbers/values associated with the words/keys   for main words
+    filler_list_values = sorted(list(filler.values()))    #list of the  numbers/values associated with the words/keys   for filler words
+
+    #HIGHEST NUMBERS
+    main_top_nums = heapq.nlargest(num, main_list_values)
+    filler_top_nums = heapq.nlargest(num, filler_list_values)
+    #MOST USED WORDS
+    main_top_words_list = []
+    filler_top_words_list = []
+
+    while len(main_top_nums) > 0:    #locate the keys/words that match the value/number-frequency for main words
+        n = main_top_nums.pop(0)    #number
+        for key, value in main.items():
+            if value == n:
+                pair = (key, value)
+                if pair not in main_top_words_list:    #I only want the pair to have a count of 1 (NO DUPLICATES)
+                    main_top_words_list.append(pair)    #word associated with number
+
+    while len(filler_top_nums) > 0:    #locate the keys/words that match the value/number-frequency for filler words
+        n = filler_top_nums.pop(0)    #number
+        for key, value in filler.items():
+            if value == n:
+                pair = (key, value)
+                if pair not in filler_top_words_list:    #I only want the pair to have a count of 1 (NO DUPLICATES)
+                    filler_top_words_list.append(pair)    #word associated with number                
+
+    main_top_words = dict(main_top_words_list)
+    filler_top_words = dict(filler_top_words_list)
+
+    print(f'Main Top {num} Words:')    #duplicates are
+    for key in main_top_words:
+        print(key, main_top_words[key])
     print()    #space
-    num_list_items = list(main.items())
-    num_list_values = list(main.values())
-    print(num_list_items[0][1])   #DEV REF
-    print()
-    sort_num_list_values = sorted(num_list_values)
-    print(sort_num_list_values)
-    
+    print(f'Filler Top  {num} Words:')
+    for key in filler_top_words:
+        print(key, filler_top_words[key])
+
+        
 
 
-    
 
 
 #FUNCTIONS   |   DEVELOPER BASICS (simple repeatable stuff for working in the python shell)
