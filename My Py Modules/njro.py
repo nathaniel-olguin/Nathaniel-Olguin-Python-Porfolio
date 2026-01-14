@@ -60,11 +60,12 @@ def word_type():    #used for identifying english word types
         'doubtful', 'questioning', 'conflicted', 'torn',
         'indecisive', 'unclear'
     ]
+    emotion = sadness + fear_anxiety + happiness + love + guilt_shame + confusion
     #SLANG ↴
-    positive_slang = ['lit', 'fire', 'dope', 'psyched', 'vibing']
+    positive_slang = ['lit', 'fire', 'dope', 'psyched', 'letsgo', 'vibing', 'onone', 'peak']
     negative_slang = ['cooked']
     
-    return symbols, numbers, filler_freq, negation, sadness, fear_anxiety, happiness, love, guilt_shame, confusion    #10 returned items to unpack or use INDEX:  word_type()[]
+    return symbols, numbers, filler_freq, negation, sadness, fear_anxiety, happiness, love, guilt_shame, confusion, emotion    #11 returned items to unpack or use INDEX:  word_type()[]
 
 
 def timestamp_checker(file):    #***used in the word & character count functions***
@@ -99,6 +100,7 @@ def punctuation_checker(word):    #***REQUIRES A STRING ARGUMENT***    Must inse
     split_word = []    #list that holds each individual character of a word.
     rebuilt_word = []    #list of newly rebuilt words
     word = word.lower()    #set the string argument to lowercase
+    final_word = ''
 
     symbols = word_type()[0]
     numbers = word_type()[1]
@@ -166,7 +168,7 @@ def word_frequency(file):    #how many times a word is used    |   ***REQUIRES A
     return main_freq, filler_freq    #returns multiple items. MUST use UNPACKING to get both values inside individual variables
 
 
-def top_words(string, num=5):    #top 5/10/15/20 used words    |   ***REQUIRES An Integer ARGUMENT  &  the same STRING Argument that you would use for:  word_frequency
+def top_words(string, num=3):    #top 5/10/15/20 used words    |   ***REQUIRES An Integer ARGUMENT  &  the same STRING Argument that you would use for:  word_frequency
     main, filler = word_frequency(string)
 
     main_list_values = sorted(list(main.values()))    #list of the  numbers/values associated with the words/keys   for main words
@@ -198,14 +200,74 @@ def top_words(string, num=5):    #top 5/10/15/20 used words    |   ***REQUIRES A
     main_top_words = dict(main_top_words_list)
     filler_top_words = dict(filler_top_words_list)
 
-    print(f'Main Top {num} Words:')    #duplicates are
+    print(f'Top {num} Filler Words:')    
     for key in main_top_words:
         print(key, main_top_words[key])
     print()    #space
-    print(f'Filler Top  {num} Words:')
+    print(f'Top {num} Filler Words:')
     for key in filler_top_words:
         print(key, filler_top_words[key])
 
+
+def sentiment(string):    #takes a string (preferably a sentence or longer over a singular word)
+    #EMOTIONS
+    sadness = word_type()[4]
+    fear_anxiety = word_type()[5]
+    happiness = word_type()[6]
+    love = word_type()[7]
+    guilt_shame = word_type()[8]
+    confusion = word_type()[9]
+    emotion = word_type()[10]
+
+    #NEED TO ADD ANOTHER WORD FREQUENCY THAT SPECIFiCALLY
+    #TARGETS EMOTION WORDS***
+
+    word_list = string.split()    
+
+    while len(word_list) > 0:    #loop through all words
+        word = word_list.pop()
+
+        if word in emotion:
+            line()    #DEV READABILITY
+            if word in sadness:
+                print(f'''Emotional Tone:  Sad**
+Word:  {word}
+''')
+            elif word in fear_anxiety:
+                print(f'''Emotional Tone:  Fear / Anxiety**
+Word:  {word}
+''')
+            elif word in happiness:
+                print(f'''Emotional Tone:  Happy**
+Word:  {word}
+''')
+            elif word in love:
+                print(f'''Emotional Tone:  Love**
+Word:  {word}
+''')
+            elif word in guilt_shame:
+                print(f'''Emotional Tone:  Guilt / Shame**
+Word:  {word}
+''')
+            elif word in confusion:
+                print(f'''Emotional Tone:  Confusion**
+Word:  {word}
+''')
+        else:
+            pass
+    
+
+
+
+    
+
+#FUNCTIONS   |   NUMBER RELATED TOOLS
+def list_length_index(num):    #take a number (int value of:  length of a list/tuple) and return a list of the corresponding index
+    list_index = []
+    while num > 0:
+        num -= 1
+        list_index.append(num)
+    return sorted(list_index)
         
 
 
