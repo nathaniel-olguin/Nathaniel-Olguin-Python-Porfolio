@@ -62,76 +62,84 @@ def word_type():    #used for identifying english word types
     ]
     emotion = sadness + fear_anxiety + happiness + love + guilt_shame + confusion
     #SLANG ↴
-    positive_slang = ['lit', 'fire', 'dope', 'psyched', 'letsgo', 'vibing', 'onone', 'peak']
-    negative_slang = ['cooked']
+    positive_slang = ['lit', 'fire', 'dope', 'psyched', 'vibing', 'peak']
+    negative_slang = ['cooked', 'salty']
     
     return symbols, numbers, filler_freq, negation, sadness, fear_anxiety, happiness, love, guilt_shame, confusion, emotion    #11 returned items to unpack or use INDEX:  word_type()[]
 
 
-def timestamp_checker(file):    #***used in the word & character count functions***
+def timestamp_checker(string):    #***used in the word & character count functions***
     date = datetime.now()    #used for simple_date formatting
     simple_date = date.strftime('%m-%d-%Y')    #used for locating timestamps
-    timestamp_count = file.count(simple_date)
+    timestamp_count = string.count(simple_date)
+    
     return timestamp_count
 
 
-def character_count(file):    #the entry-dating formating is 45-ish (spacing and \n lines) characters long    |   ***REQUIRES A STRING ARGUMENT***
+def character_count(string):    #the entry-dating formating is 45-ish (spacing and \n lines) characters long    |   ***REQUIRES A STRING ARGUMENT***
     timestamp_count = timestamp_checker(file)
     
-    final_count = len(file) - (timestamp_count * round(45.5))    #wordcount - the number of timestamps
-    print()    #space
-    if timestamp_count > 0:    #if i reuse this function and there is no timestamp count no need to mention it.
-        print(f'Journal Entries:      {timestamp_count}')    #number of times a journal entry was made calculated using the count of timestamps
-    return f'Character Count:  {final_count}'    #word count
+    final_count = len(string) - (timestamp_count * round(45.5))    #wordcount - the number of timestamps
+        
+    return final_count, timestamp_count    #Character count
 
 
-def word_count(file):    #word count of the timestamp is 5    |   ***REQUIRES A STRING ARGUMENT***
+def word_count(string):    #word count of the timestamp is 5    |   ***REQUIRES A STRING ARGUMENT***
     timestamp_count = timestamp_checker(file)
 
-    word_list = file.split()    #list of words in file
+    word_list = string.split()    #list of words in file
     final_count = len(word_list) - (timestamp_count * 5)
-    print()    #space
-    if timestamp_count > 0:    #if i reuse this function and there is no timestamp count no need to mention it.
-        print(f'Journal Entries:      {timestamp_count}')
-    return f'Word Count:            {final_count}'
+    
+    return final_count, timestamp_count
 
 
-def punctuation_checker(word):    #***REQUIRES A STRING ARGUMENT***    Must insert a single string. Utilize a while loop and the .pop() method for lists
-    split_word = []    #list that holds each individual character of a word.
-    rebuilt_word = []    #list of newly rebuilt words
-    word = word.lower()    #set the string argument to lowercase
-    final_word = ''
-
+def punctuation_checker(string):    #***REQUIRES A STRING ARGUMENT***   A word/sentence/paragraph
     symbols = word_type()[0]
     numbers = word_type()[1]
     unwanted = symbols + numbers
-    
-    if word.isalnum() is False:    #checking for punctuation: .isalnum() returns False if punctuation/symbols are detected
-        #***Punctuation Detected***
-        for char in word:    #loop that places each character of a word into the split_word list in order.
-            split_word.append(char)   
-        while len(split_word) > 0:    #now go thru each character in the list to see if contains any undesired symbols/punctuation to then rebuild the word without them
-            char = split_word.pop(0)    #remove each character from the split_word list for testing
-            if char == '&':    #checking for & symbol to replace with string 'and'
-                rebuilt_word.append('a')
-                rebuilt_word.append('n')
-                rebuilt_word.append('d')
-                final_word = ''.join(rebuilt_word)    #rebuild the word with the .join() method        
+    final_list = []
 
-            if char not in unwanted:    #checking for certain punctuation 
-                rebuilt_word.append(char)
-                final_word = ''.join(rebuilt_word)    #rebuild the word with the .join() method
+    string_list = string.split()
+    while len(string_list) > 0:
+        w = string_list.pop()
 
-    else:
-        #***NO Punctuation Detected***
-        final_word = word
-    return final_word    #outputs a single word
+        split_word = []    #list that holds each individual character of a word.
+        rebuilt_word = []    #list of newly rebuilt words
+        word = w.lower()    #set the string argument to lowercase
+        final_word = ''
+        
+
+        if word.isalnum() is False:    #checking for punctuation: .isalnum() returns False if punctuation/symbols are detected
+            #***Punctuation Detected***
+            for char in word:    #loop that places each character of a word into the split_word list in order.
+                split_word.append(char)
+            while len(split_word) > 0:    #now go thru each character in the list to see if contains any undesired symbols/punctuation to then rebuild the word without them
+                char = split_word.pop(0)    #remove each character from the split_word list for testing
+                if char == '&':    #checking for & symbol to replace with string 'and'
+                    rebuilt_word.append('a')
+                    rebuilt_word.append('n')
+                    rebuilt_word.append('d')
+                    final_word = ''.join(rebuilt_word)    #rebuild the word with the .join() method        
+
+                if char not in unwanted:    #checking for certain punctuation 
+                    rebuilt_word.append(char)
+                    final_word = ''.join(rebuilt_word)    #rebuild the word with the .join() method
+
+        else:
+            #***NO Punctuation Detected***
+            final_word = word
+            
+        final_list.append(final_word)
+        if len(final_list) > 1:
+            final_string = ' '.join(final_list)
+        
+    return final_list, final_string    #returns a list of cleaned up words as well as a joined string version
 
 
-def word_frequency(file):    #how many times a word is used    |   ***REQUIRES A STRING ARGUMENT***   A sentence/paragraph
+def word_frequency(string):    #how many times a word is used    |   ***REQUIRES A STRING ARGUMENT***   A word/sentence/paragraph
     main_freq = {}    #dictionary for main words used
     filler_freq = {}    #dictionary for filler-words used
-    word_list = file.split()    #list of words in file
+    word_list = string.split()    #list of words in file
 
     filler_words = word_type()[2]    #filler words used to filter out
     
@@ -156,19 +164,10 @@ def word_frequency(file):    #how many times a word is used    |   ***REQUIRES A
         if word in ('-', '--', ':', '::'):    #final clearing of undesired punctuation
             del main_freq[word]
             
-    print()    #space
-    print('Main-Word Frequency Data:')
-    for key in main_freq:    #print items in dictonary
-        print(key , main_freq[key], sep='   =   ')
-    print()    #space
-    print('Filler-Word Frequency Data:')
-    for key in filler_freq:
-        print(key, filler_freq[key], sep='   =   ')
-    print()    #space
     return main_freq, filler_freq    #returns multiple items. MUST use UNPACKING to get both values inside individual variables
 
 
-def top_words(string, num=3):    #top 5/10/15/20 used words    |   ***REQUIRES An Integer ARGUMENT  &  the same STRING Argument that you would use for:  word_frequency
+def top_words(string, num=3):    #top 3 used words (mutable)    |   ***REQUIRES An Integer ARGUMENT  &  A word/sentence/paragraph
     main, filler = word_frequency(string)
 
     main_list_values = sorted(list(main.values()))    #list of the  numbers/values associated with the words/keys   for main words
@@ -200,16 +199,10 @@ def top_words(string, num=3):    #top 5/10/15/20 used words    |   ***REQUIRES A
     main_top_words = dict(main_top_words_list)
     filler_top_words = dict(filler_top_words_list)
 
-    print(f'Top {num} Filler Words:')    
-    for key in main_top_words:
-        print(key, main_top_words[key])
-    print()    #space
-    print(f'Top {num} Filler Words:')
-    for key in filler_top_words:
-        print(key, filler_top_words[key])
+    return main_top_words, filler_top_words    #returns the top words used for both main and filler type words
 
 
-def sentiment(string):    #takes a string (preferably a sentence or longer over a singular word)
+def sentiment(string):    #***REQUIRES A STRING ARGUMENT***   A word/sentence/paragraph
     #EMOTIONS
     sadness = word_type()[4]
     fear_anxiety = word_type()[5]
@@ -218,48 +211,53 @@ def sentiment(string):    #takes a string (preferably a sentence or longer over 
     guilt_shame = word_type()[8]
     confusion = word_type()[9]
     emotion = word_type()[10]
-
-    #NEED TO ADD ANOTHER WORD FREQUENCY THAT SPECIFiCALLY
-    #TARGETS EMOTION WORDS***
-
-    word_list = string.split()    
+    
+    word_list = string.split()
+    emotional_words = {
+        'sadness':0,
+        'fear / anxiety':0,
+        'happiness':0,
+        'love':0,
+        'guilt / shame':0,
+        'confusion':0,
+        'emotion':0
+    }
 
     while len(word_list) > 0:    #loop through all words
         word = word_list.pop()
-
-        if word in emotion:
-            line()    #DEV READABILITY
+     
+        if word in emotion:    #IDENTIFYING EMOTIONAL WORDS
             if word in sadness:
-                print(f'''Emotional Tone:  Sad**
-Word:  {word}
-''')
+                emotional_words['sadness'] += 1
+                emotional_words['emotion'] += 1    #track total emotion
+               
             elif word in fear_anxiety:
-                print(f'''Emotional Tone:  Fear / Anxiety**
-Word:  {word}
-''')
+                emotional_words['fear / anxiety'] += 1
+                emotional_words['emotion'] += 1    #track total emotion
+                
             elif word in happiness:
-                print(f'''Emotional Tone:  Happy**
-Word:  {word}
-''')
+                emotional_words['happiness'] += 1
+                emotional_words['emotion'] += 1    #track total emotion
+                
             elif word in love:
-                print(f'''Emotional Tone:  Love**
-Word:  {word}
-''')
+                emotional_words['love'] += 1
+                emotional_words['emotion'] += 1    #track total emotion
+            
             elif word in guilt_shame:
-                print(f'''Emotional Tone:  Guilt / Shame**
-Word:  {word}
-''')
+                emotional_words['guilt / shame'] += 1
+                emotional_words['emotion'] += 1    #track total emotion
+               
             elif word in confusion:
-                print(f'''Emotional Tone:  Confusion**
-Word:  {word}
-''')
+                emotional_words['confusion'] += 1
+                emotional_words['emotion'] += 1    #track total emotion
+                
         else:
             pass
-    
+            
+    return emotional_words    #returns a dictionary of the emotional catagories used and how often
 
 
 
-    
 
 #FUNCTIONS   |   NUMBER RELATED TOOLS
 def list_length_index(num):    #take a number (int value of:  length of a list/tuple) and return a list of the corresponding index
@@ -268,7 +266,6 @@ def list_length_index(num):    #take a number (int value of:  length of a list/t
         num -= 1
         list_index.append(num)
     return sorted(list_index)
-        
 
 
 
@@ -278,4 +275,3 @@ def line():
     print('''
 ——————————————————————————————————
 ''')
-
