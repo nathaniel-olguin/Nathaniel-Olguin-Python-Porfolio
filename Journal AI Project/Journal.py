@@ -10,15 +10,9 @@ import os
 from datetime import datetime
 
 
-#BASE DEF
-def space():
-    for count in range(2):
-        print()
-
-
 #VARIABLES
 date = datetime.now()
-specific_time = date.strftime('%m-%d-%Y  -  %A, %I.%M.%S %p')    #specific datetime for entries within the file
+specific_time = date.strftime('%m-%d-%Y  -  %A, %I:%M:%S %p')    #specific datetime for entries within the file
 simple_date = date.strftime('%m-%d-%Y')    #for the file name
 initial_directory = os.getcwd()    #reference
 data_dir = f'{initial_directory}\\Data'
@@ -29,11 +23,6 @@ try:
     daily_entry = input()
 except EOFError:    #catches when nothing is entered
     daily_entry = ''
-finally:    #preview of what will be added to the .md file
-    print(specific_time)
-    space()
-    print(daily_entry)
-    space()
 
 
 #STEP 2  |  OS module: Creating the directories:  'Reports' & 'Data'
@@ -42,7 +31,6 @@ os.makedirs('Data', exist_ok=True)    #This is where the journal entries will be
 
 
 #STEP 3  |  creating an 'entry file' or adding onto an existing file for the same day
-data_dir
 if f'Daily Journal  -  {simple_date}.md' in initial_directory:
     with open(f'{data_dir}\\Daily Journal  -  {simple_date}.md', 'a') as entry:
         entry.write(f'\n \n#{specific_time} \n \n    {daily_entry} TEST')
