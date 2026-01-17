@@ -77,7 +77,7 @@ def timestamp_checker(string):    #***used in the word & character count functio
 
 
 def character_count(string):    #the entry-dating formating is 45-ish (spacing and \n lines) characters long    |   ***REQUIRES A STRING ARGUMENT***
-    timestamp_count = timestamp_checker(file)
+    timestamp_count = timestamp_checker(string)
     
     final_count = len(string) - (timestamp_count * round(45.5))    #wordcount - the number of timestamps
         
@@ -85,7 +85,7 @@ def character_count(string):    #the entry-dating formating is 45-ish (spacing a
 
 
 def word_count(string):    #word count of the timestamp is 5    |   ***REQUIRES A STRING ARGUMENT***
-    timestamp_count = timestamp_checker(file)
+    timestamp_count = timestamp_checker(string)
 
     word_list = string.split()    #list of words in file
     final_count = len(word_list) - (timestamp_count * 5)
@@ -271,7 +271,12 @@ def list_length_index(num):    #take a number (int value of:  length of a list/t
 
 
 #FUNCTIONS   |   DEVELOPER BASICS (simple repeatable stuff for working in the python shell)
-def line():
-    print('''
+def line(line=0):    #default usecase prints for idle shell use. If you input an argument it will return the same thing without hard-printing
+    if line == 0:
+        print('''
 ——————————————————————————————————
 ''')
+    else:
+        return '''
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+'''
