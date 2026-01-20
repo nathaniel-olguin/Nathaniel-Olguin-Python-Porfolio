@@ -80,8 +80,9 @@ def character_count(string):    #the entry-dating formating is 45-ish (spacing a
     timestamp_count = timestamp_checker(string)
     
     final_count = len(string) - (timestamp_count * round(45.5))    #wordcount - the number of timestamps
-        
-    return final_count, timestamp_count    #Character count
+    counts = { 'Entries':timestamp_count, 'Character Count':final_count}    #using dictionaries for json support
+
+    return counts    #Character count
 
 
 def word_count(string):    #word count of the timestamp is 5    |   ***REQUIRES A STRING ARGUMENT***
@@ -89,8 +90,9 @@ def word_count(string):    #word count of the timestamp is 5    |   ***REQUIRES 
 
     word_list = string.split()    #list of words in file
     final_count = len(word_list) - (timestamp_count * 5)
-    
-    return final_count, timestamp_count
+    counts = { 'Entries':timestamp_count, 'Word Count':final_count}    #using dictionaries for json support
+
+    return counts    #word count
 
 
 def punctuation_checker(string):    #***REQUIRES A STRING ARGUMENT***   A word/sentence/paragraph
