@@ -8,7 +8,7 @@
 
 
 #IMPORTS
-import os, njro    #njro is my personal module of functions
+import json, os, njro    #njro is my personal module of functions
 from datetime import datetime    #used for finding the current days journal entry
 
 
@@ -71,3 +71,19 @@ with open(f'{report_dir}\\{todays_report}','a') as report:
     ###Sentiment:
         {sentiment}
 {njro.line(1)}''')    #END      
+
+
+#STEP 4   |   Creating a JSON report
+json_dict = {
+    'Character Count':character_count,
+    'Word Count':word_count,
+    'Main Words':main,
+    'Filler Words':filler,
+    'Top Main Words':top_main,
+    'Top Filler Words':top_filler,
+    'Sentiment':sentiment
+    }
+json_report = f'Daily Report  -  {simple_date}.json'
+
+with open(f'{report_dir}\\{json_report}','w') as file:
+    json.dump(json_dict, file)
