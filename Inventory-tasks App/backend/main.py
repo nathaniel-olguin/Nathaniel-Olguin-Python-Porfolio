@@ -6,17 +6,21 @@ from pydantic import BaseModel
 #VARIABLES
 app = FastAPI()    #app server object
 inventory = [
-    {'id':1000, 'name':'Bar Soap', 'quantity':3},
-    {'id':1001, 'name':'Shampoo', 'quantity':1},
-    {'id':1002, 'name':'Conditioner', 'quantity':1},
+    {'id':1000, 'name':'Black Toner', 'quantity':150},
+    {'id':1001, 'name':'Cyan Toner', 'quantity':99},
+    {'id':1002, 'name':'Yellow Toner', 'quantity':27},
+    {'id':1003, 'name':'Magenta Toner', 'quantity':4}
 ]
 
 
-#pydantic   |   FUNCTIONS
-class inventory_items(BaseModel):    #structure for inventory
-    id: int
+#pydantic   |   CLASSES
+class inventory_items_body(BaseModel):    #body of the inventory structure (excluding ID) ***MUTABLE***
     name: str
     quantity: int
+
+class inventory_items_id(inventory_items_body):    #full object with ID
+    id: int
+
 
 
 #FastAPI   |   FUNCTIONS
@@ -25,21 +29,25 @@ def api_status():
     return {'STATUS':'***SUCCESSFUL***'}
 api_status()
 
-@app.get('/inventory')    #read inventory requests
+@app.get('/inventory')    #read inventory items
 def check_inventory():
     return inventory
 
 @app.post('/inventory')    #add inventory items
-def add_inventory(item: inventory_items):    
-    inventory.append(item.dict())    #adding to the end of the inventory dictionary
+def add_inventory(item: inventory_items_id):    
+    inventory.append(item.dict())    #adding to the end of the inventory list of dictionaries
     return item
 
-@app.put('/inventory/{id_number}')    #update existing inventory items    ***CURRENTLY CAUSING internal runtime error 500***
-def update_inventory(id_number: int, update: inventory_items):
+@app.put('/inventory/{id_number}')    #update existing inventory items
+def update_inventory(id_number: int, update: inventory_items_body):    #uses the body class so that the ID is not affected by the update***
     for index, item in enumerate(inventory):    #numbered list of invenotry
         if item['id'] == id_number:    #if 'item' (the id) in the 'index, item' pair of inventory is matches an existing 'id'
-            inventory[index] = updated.dict()
-            return updated
+            #UPDATE name/quantity without altering the ID#
+            inventory[index]['name'] = update.name
+            inventory[index]['quantity'] = update.quantity
+            
+            return inventory[index]
+        
     return {'***ERROR***': 'Item not found'}    #if id does not match display error message
 
 @app.delete('/inventory/{id_number}')    #delete inventory if its id_number exists
@@ -47,5 +55,7 @@ def remove_inventory(id_number: int):
     for item in inventory:
         if item['id'] == id_number:
             inventory.remove(item)
+            
             return {'***UPDATE***': 'Item Deleted from inventory'}
-    return {'***ERROR***': 'Item not found'}
+            
+    return {'***ERROR***': 'Item not found'}    #if id does not match display error message
